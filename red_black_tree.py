@@ -1,3 +1,11 @@
+"""
+    Written by  Emil Karlström
+                Blekinge Tekniska Högskola
+                DVAMI19
+    Code for Assignment 2 of course DV1625
+    No steal code P L O X 
+"""
+
 COLOR_RED = 0
 COLOR_BLACK = 1
 
