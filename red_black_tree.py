@@ -11,24 +11,6 @@ COLOR_BLACK = 1
 
 class RedBlackTree:
     def __init__(self):
-        self.root = None
-    def __str__(self):
-        out = self._recursive_str(self.root, "", "")
-        
-        outs = out.split("\n")
-        max_len = max([len(s) for s in outs])
-        outs = [
-            s.rjust(max_len) for s in outs
-        ]
-        return '\n'.join(outs)
-    def _recursive_str(self, node, out, path):
-        out += f'{path} {str(node)}\n'
-        if node:
-            if node.left:
-                out = self._recursive_str(node.left, out, path + "L")
-            if node.right:
-                out = self._recursive_str(node.right, out, path + "R")
-        return out
     def insert(self, value):
         nnode = Node(value)
         self._default_binary_tree_insert(nnode)
@@ -363,7 +345,6 @@ class RedBlackTree:
                         "RED" if node.color == COLOR_RED else "BLACK",
                         node.left.value if node.left else None,
                         node.right.value if node.right else None,
-                        node.parent.value if node.parent else '--'
                         ))
             if node.left:
                 queue.append(node.left)
@@ -377,6 +358,3 @@ class Node:
         self.color = color
         self.left = left
         self.right = right
-
-    def __str__(self):
-        return f'Val: {self.value} | Col: {"RED" if self.color == COLOR_RED else "BLK"} | .p: {str(self.parent.value).rjust(2) if self.parent else "--"} L: {self.left} R: {self.right}'
