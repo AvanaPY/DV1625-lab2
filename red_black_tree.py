@@ -11,12 +11,13 @@ COLOR_BLACK = 1
 
 class RedBlackTree:
     def __init__(self):
+        self.root = None
     def insert(self, value):
         nnode = Node(value)
         self._default_binary_tree_insert(nnode)
         if nnode != self.root and nnode.parent:
             self._red_black_tree_fix(nnode)
-            self.root.color = COLOR_BLACK # Reset root color to black in case it changed
+            self.root.color = COLOR_BLACK
     def _default_binary_tree_insert(self, nnode):
         if self.root:
             node = self.root
@@ -47,7 +48,7 @@ class RedBlackTree:
                 return gparent.right
             return gparent.left
         return None
-    def _red_black_tree_fix(self, nnode): # nnode is the new node
+    def _red_black_tree_fix(self, nnode):
         uncle = self._get_uncle(nnode)
         uncle_color = uncle.color if uncle else COLOR_BLACK
 
@@ -55,7 +56,7 @@ class RedBlackTree:
         parent  = nnode.parent
         
         if parent.color == COLOR_RED:
-            if uncle_color == COLOR_RED: # Color flip
+            if uncle_color == COLOR_RED:
                 gparent.color = COLOR_RED
                 uncle.color = COLOR_BLACK
                 parent.color = COLOR_BLACK
@@ -70,33 +71,25 @@ class RedBlackTree:
             nnode.color = COLOR_BLACK
             grandparent.color = COLOR_RED
             parent.color = COLOR_RED
-
         elif grandparent.right and grandparent.right.right == nnode:
             self._left_rotate(grandparent)
             parent.color = COLOR_BLACK
             grandparent.color = COLOR_RED
             nnode.color = COLOR_RED
-
         elif grandparent.left and grandparent.left.right == nnode:
             self._left_rotate(parent)
             self._right_rotate(grandparent)
             nnode.color = COLOR_BLACK
             grandparent.color = COLOR_RED
             parent.color = COLOR_RED
-        
         elif grandparent.left and grandparent.left.left == nnode:
             self._right_rotate(grandparent)
             parent.color = COLOR_BLACK
             grandparent.color = COLOR_RED
             nnode.color = COLOR_RED
-
-        else:
-            import sys
-            sys.exit()
-    def _right_rotate(self, x): # x is the node to rotate around
+    def _right_rotate(self, x):
         y = x.left
         x.left = y.right
-
         if y.right is not None:
             y.right.parent = x
         y.parent = x.parent
@@ -107,7 +100,6 @@ class RedBlackTree:
             x.parent.right = y
         else:
             x.parent.left = y
-
         y.right = x
         x.parent = y
     def _left_rotate(self, x): # x is the node to rotate around
@@ -284,10 +276,7 @@ class RedBlackTree:
             node.value = replacement.value
         # Initial step 2:
         if node.color == COLOR_RED:
-            if replacement is None or replacement.color == COLOR_RED:
-                # We're done
-                pass
-            elif replacement.color == COLOR_BLACK:
+            if replacement and replacement.color == COLOR_BLACK:
                 replacement.color == COLOR_RED
                 self._manage_deletion_case(x, x_parent)
         else:
